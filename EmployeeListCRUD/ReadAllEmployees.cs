@@ -15,13 +15,14 @@ namespace EmployeeListCRUD
         [FunctionName("ReadAllEmployees")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-             [Table("employees")] CloudTable cloudTable,
+            // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
+            [Table("employees")] CloudTable cloudTable,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
+            // Will use to returned the "serialized" user data
             List<EmployeeOnlyNameAndId> employeeList = new List<EmployeeOnlyNameAndId>();
 
+            // This range will query all data
             TableQuery<EmployeeTable> rangeQuery = new TableQuery<EmployeeTable>();
 
             // Execute the query and loop through the results

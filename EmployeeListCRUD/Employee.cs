@@ -1,6 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.Collections.Generic;
 
 namespace EmployeeListCRUD
 {
@@ -21,6 +20,7 @@ namespace EmployeeListCRUD
         }
     }
 
+    // Used for showing restricted user data
     public class EmployeeOnlyNameAndId
     {
         public string Name { get; set; }
@@ -33,6 +33,7 @@ namespace EmployeeListCRUD
         }
     }
 
+    // Needed for table query
     public class EmployeeTable : TableEntity
     {
         public string Name { get; set; }
