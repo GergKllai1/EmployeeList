@@ -7,6 +7,7 @@ namespace EmployeeListCRUD
     {
         public string Name { get; set; }
         public string Id { get; set; }
+        public string Department { get; set; }
 
         public Employee(string name, string department)
         {
@@ -14,7 +15,18 @@ namespace EmployeeListCRUD
             Name = name;
             Id = id;
             RowKey = id;
-            PartitionKey = department;
+            Department = department;
+            PartitionKey = "employees";
+        }
+
+        public Employee(string id, string name, string department)
+        {
+            Name = name;
+            Id = id;
+            RowKey = id;
+            Department = department;
+            PartitionKey = "employees";
+            ETag = "*";
         }
 
         public Employee()
