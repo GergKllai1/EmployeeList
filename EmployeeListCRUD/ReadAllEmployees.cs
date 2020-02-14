@@ -14,7 +14,7 @@ namespace EmployeeListCRUD
     {
         [FunctionName("ReadAllEmployees")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
             [Table("employees", Connection = "TableStorageConnection")] CloudTable cloudTable,
             ILogger log)

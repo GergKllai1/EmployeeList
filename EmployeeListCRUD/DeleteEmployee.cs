@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace EmployeeListCRUD
 {
-    public static class EditEmployee
+    public static class DeleteEmployee
     {
-        [FunctionName("EditEmployee")]
+        [FunctionName("DeleteEmployee")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
             [Table("employees", Connection = "TableStorageConnection")] CloudTable cloudTable,
             ILogger log)
         {
@@ -22,16 +22,16 @@ namespace EmployeeListCRUD
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             string employeeId = data.id;
-            string updatedEmployeeName = data.name;
-            string updatedEmployeeDepartment = data.department;
+            string employeeNameToBeDeleted = data.name;
+            string employeeDepartmentToBeDeleted = data.department;
 
-            Employee updatedEmployeeData = new Employee(employeeId, updatedEmployeeName, updatedEmployeeDepartment);
+            Employee employeeToDelete = new Employee(employeeId, employeeNameToBeDeleted, employeeDepartmentToBeDeleted);
 
-            TableOperation operation = TableOperation.Replace(updatedEmployeeData);
+            TableOperation operation = TableOperation.Delete(employeeToDelete);
 
             await cloudTable.ExecuteAsync(operation);
 
-            return new OkObjectResult($"The employee data of {updatedEmployeeName} has been updated!");
+            return new OkObjectResult($"Employee with id: {employeeId} and name: {employeeNameToBeDeleted} has been deleted!");
         }
     }
 }
