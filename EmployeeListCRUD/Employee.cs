@@ -3,12 +3,10 @@ using System;
 
 namespace EmployeeListCRUD
 {
-    public class Employee
+    public class Employee : TableEntity
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public string PartitionKey { get; set; }
-        public string RowKey { get; set; }
 
         public Employee(string name, string department)
         {
@@ -17,6 +15,10 @@ namespace EmployeeListCRUD
             Id = id;
             RowKey = id;
             PartitionKey = department;
+        }
+
+        public Employee()
+        {
         }
     }
 
@@ -31,12 +33,5 @@ namespace EmployeeListCRUD
             Name = name;
             Id = id;
         }
-    }
-
-    // Needed for table query
-    public class EmployeeTable : TableEntity
-    {
-        public string Name { get; set; }
-        public string Id { get; set; }
     }
 }

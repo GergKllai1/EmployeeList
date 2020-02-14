@@ -16,17 +16,17 @@ namespace EmployeeListCRUD
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
             // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
-            [Table("employees")] CloudTable cloudTable,
+            [Table("employees", Connection = "TableStorageConnection")] CloudTable cloudTable,
             ILogger log)
         {
             // Will use to returned the "serialized" user data
             List<EmployeeOnlyNameAndId> employeeList = new List<EmployeeOnlyNameAndId>();
 
             // This range will query all data
-            TableQuery<EmployeeTable> rangeQuery = new TableQuery<EmployeeTable>();
+            TableQuery<Employee> rangeQuery = new TableQuery<Employee>();
 
             // Execute the query and loop through the results
-            foreach (EmployeeTable entity in
+            foreach (Employee entity in
                 await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null))
             {
                 employeeList.Add(new EmployeeOnlyNameAndId(entity.Name, entity.Id));

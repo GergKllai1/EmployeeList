@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 using System.IO;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace EmployeeListCRUD
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             // This will create/add to the table employees
-            [Table("employees")] IAsyncCollector<Employee> employeeData,
+            [Table("employees", Connection = "TableStorageConnection")] CloudTable employeeData,
             ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -26,7 +27,9 @@ namespace EmployeeListCRUD
 
             Employee employeeDataToSave = new Employee(name, department);
 
-            await employeeData.AddAsync(employeeDataToSave);
+            TableOperation operation = TableOperation.Insert(employeeDataToSave);
+
+            await employeeData.ExecuteAsync(operation);
 
             return new OkObjectResult($"The employee {employeeDataToSave.Name} has been saved successfully!");
         }
