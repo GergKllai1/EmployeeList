@@ -15,6 +15,7 @@ namespace EmployeeListCRUD
         [FunctionName("DeleteEmployee")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
+            // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
             [Table("employees", Connection = "TableStorageConnection")] CloudTable cloudTable,
             ILogger log)
         {

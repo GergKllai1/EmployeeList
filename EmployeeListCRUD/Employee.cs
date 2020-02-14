@@ -9,6 +9,7 @@ namespace EmployeeListCRUD
         public string Id { get; set; }
         public string Department { get; set; }
 
+        // Constructor for AddEmployee
         public Employee(string name, string department)
         {
             string id = Guid.NewGuid().ToString();
@@ -19,6 +20,7 @@ namespace EmployeeListCRUD
             PartitionKey = "employees";
         }
 
+        // Constructor for EditEmployee and DeleteEmployee
         public Employee(string id, string name, string department)
         {
             Name = name;
@@ -29,12 +31,13 @@ namespace EmployeeListCRUD
             ETag = "*";
         }
 
+        // Overload constructor to avoid errors when using the class as a generic type parameter in ReadAllEmployees
         public Employee()
         {
         }
     }
 
-    // Used for showing restricted user data
+    // Using the Employee : TableEntity class would result in excess data sharing
     public class EmployeeOnlyNameAndId
     {
         public string Name { get; set; }

@@ -15,6 +15,7 @@ namespace EmployeeListCRUD
         [FunctionName("EditEmployee")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req,
+            // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
             [Table("employees", Connection = "TableStorageConnection")] CloudTable cloudTable,
             ILogger log)
         {
@@ -25,8 +26,11 @@ namespace EmployeeListCRUD
             string updatedEmployeeName = data.name;
             string updatedEmployeeDepartment = data.department;
 
+            // TableEntity is required for TableOperation.Replace
             Employee updatedEmployeeData = new Employee(employeeId, updatedEmployeeName, updatedEmployeeDepartment);
-
+            
+            // Replace (PUT) the data entry. Trying to update RowKey or PartitionKey would result in error.
+            // If that is needed the entity has to be deleted and recreated.
             TableOperation operation = TableOperation.Replace(updatedEmployeeData);
 
             await cloudTable.ExecuteAsync(operation);

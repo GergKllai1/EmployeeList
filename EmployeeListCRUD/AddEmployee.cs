@@ -15,7 +15,7 @@ namespace EmployeeListCRUD
         [FunctionName("AddEmployee")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            // This will create/add to the table employees
+            // Invoce Microsoft.WindowsAzure.Storage.Table, which will connect to the employees table
             [Table("employees", Connection = "TableStorageConnection")] CloudTable employeeData,
             ILogger log)
         {
@@ -25,6 +25,7 @@ namespace EmployeeListCRUD
             string name = data.name;
             string department = data.department;
 
+            // data.name / data.department cannot be used directly
             Employee employeeDataToSave = new Employee(name, department);
 
             TableOperation operation = TableOperation.Insert(employeeDataToSave);

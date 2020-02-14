@@ -22,7 +22,7 @@ namespace EmployeeListCRUD
             // Will use to returned the "serialized" user data
             List<EmployeeOnlyNameAndId> employeeList = new List<EmployeeOnlyNameAndId>();
 
-            // This range will query all data
+            // Will query all data
             TableQuery<Employee> rangeQuery = new TableQuery<Employee>();
 
             // Execute the query and loop through the results
