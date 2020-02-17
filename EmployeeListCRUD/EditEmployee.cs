@@ -22,9 +22,9 @@ namespace EmployeeListCRUD
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string employeeId = data.id;
-            string updatedEmployeeName = data.name;
-            string updatedEmployeeDepartment = data.department;
+            string employeeId = data.Id;
+            string updatedEmployeeName = data.Name;
+            string updatedEmployeeDepartment = data.Department;
 
             // TableEntity is required for TableOperation.Replace
             Employee updatedEmployeeData = new Employee(employeeId, updatedEmployeeName, updatedEmployeeDepartment);

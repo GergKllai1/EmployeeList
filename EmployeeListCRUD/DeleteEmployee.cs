@@ -22,9 +22,9 @@ namespace EmployeeListCRUD
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string employeeId = data.id;
-            string employeeNameToBeDeleted = data.name;
-            string employeeDepartmentToBeDeleted = data.department;
+            string employeeId = data.Id;
+            string employeeNameToBeDeleted = data.Name;
+            string employeeDepartmentToBeDeleted = data.Department;
 
             Employee employeeToDelete = new Employee(employeeId, employeeNameToBeDeleted, employeeDepartmentToBeDeleted);
 

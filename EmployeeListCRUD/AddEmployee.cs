@@ -22,8 +22,8 @@ namespace EmployeeListCRUD
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
-            string name = data.name;
-            string department = data.department;
+            string name = data.Name;
+            string department = data.Department;
 
             // data.name / data.department cannot be used directly
             Employee employeeDataToSave = new Employee(name, department);

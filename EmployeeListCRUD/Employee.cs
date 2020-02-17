@@ -38,14 +38,16 @@ namespace EmployeeListCRUD
     }
 
     // Using the Employee : TableEntity class would result in excess data sharing
-    public class EmployeeOnlyNameAndId
+    public class EmployeeNameIdDepartment
     {
         public string Name { get; set; }
         public string Id { get; set; }
+        public string Department { get; set; }
 
-        public EmployeeOnlyNameAndId(string name, string id)
+        public EmployeeNameIdDepartment(string name, string id, string department)
         {
             Name = name;
+            Department = department;
             Id = id;
         }
     }

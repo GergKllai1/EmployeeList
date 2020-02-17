@@ -20,7 +20,7 @@ namespace EmployeeListCRUD
             ILogger log)
         {
             // Will use to returned the "serialized" user data
-            List<EmployeeOnlyNameAndId> employeeList = new List<EmployeeOnlyNameAndId>();
+            List<EmployeeNameIdDepartment> employeeList = new List<EmployeeNameIdDepartment>();
 
             // Will query all data
             TableQuery<Employee> rangeQuery = new TableQuery<Employee>();
@@ -29,7 +29,7 @@ namespace EmployeeListCRUD
             foreach (Employee entity in
                 await cloudTable.ExecuteQuerySegmentedAsync(rangeQuery, null))
             {
-                employeeList.Add(new EmployeeOnlyNameAndId(entity.Name, entity.Id));
+                employeeList.Add(new EmployeeNameIdDepartment(entity.Name, entity.Id, entity.Department));
             }
 
             return new OkObjectResult($"{JsonSerializer.Serialize(employeeList)}");
